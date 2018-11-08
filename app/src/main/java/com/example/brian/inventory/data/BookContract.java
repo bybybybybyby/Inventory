@@ -22,11 +22,11 @@ public class BookContract {
 
     /**
      * Possible path (appended to base content URI for possible URI's)
-     * For instance, content://com.example.android.pets/pets/ is a valid path for
-     * looking at pet data. content://com.example.android.pets/staff/ will fail,
+     * For instance, content://com.example.brian.inventory/inventory/ is a valid path for
+     * looking at book data. content://com.example.brian.inventory/staff/ will fail,
      * as the ContentProvider hasn't been given any information on what to do with "staff".
      */
-    public static final String PATH_BOOKS = "books";
+    public static final String PATH_INVENTORY = "inventory";
 
     // To prevent someone from accidentally instantiating the contract class,
     // give it an empty constructor.
@@ -38,15 +38,15 @@ public class BookContract {
     public static final class BookEntry implements BaseColumns {
 
         /** The content URI to access the book data in the provider */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_INVENTORY);
 
         /** The MIME type of the {@link #CONTENT_URI} for a list of books. */
         public static final String CONTENT_LIST_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
 
         /** The MIME type of the {@link #CONTENT_URI} for a single book. */
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_BOOKS;
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
 
         // Name of database table for books
         public final static String TABLE_NAME = "books";
