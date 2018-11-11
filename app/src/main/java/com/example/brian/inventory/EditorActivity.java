@@ -36,6 +36,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -49,24 +50,31 @@ import java.net.URI;
  */
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** EditText field to enter the book's name */
+    // EditText field to enter the book's attributes
     private EditText mNameEditText;
-    /** EditText field to enter the book's price */
     private EditText mPriceEditText;
-    /** EditText field to enter the book's quantity */
     private EditText mQuantityEditText;
-    /** EditText field to enter the supplier's name */
     private EditText mSupplierNameEditText;
-    /** EditText field to enter the supplier's phone */
     private EditText mSupplierPhoneEditText;
 
-    /** Content URI for the existing book (null if it's a new book) */
+    private Button mQuantityMinusButton;
+    private Button mQuantityPlusButton;
+    private Button mPhoneButton;
+
+
+    /**
+     * Content URI for the existing book (null if it's a new book)
+     */
     private Uri mCurrentBookUri;
 
-    /** Identifier for the existing book data loader. */
+    /**
+     * Identifier for the existing book data loader.
+     */
     private static final int EXISTING_BOOK_LOADER = 0;
 
-    /** Boolean flag that keeps track of whether the book has been edited (true) or not (false) */
+    /**
+     * Boolean flag that keeps track of whether the book has been edited (true) or not (false)
+     */
     private boolean mBookHasChanged = false;
 
     /**
@@ -92,7 +100,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             mBookHasChanged = savedInstanceState.getBoolean("mBookHasChanged");
         }
 
@@ -108,8 +116,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a book that hasn't been created yet.)
             invalidateOptionsMenu();
-        }
-        else {
+        } else {
             setTitle(R.string.editor_activity_title_edit_book);
 
             //Initialize a loader to read the book data from the database and display
@@ -123,6 +130,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mQuantityEditText = (EditText) findViewById(R.id.edit_book_quantity);
         mSupplierNameEditText = (EditText) findViewById(R.id.edit_supplier_name);
         mSupplierPhoneEditText = (EditText) findViewById(R.id.edit_supplier_phone);
+        mQuantityMinusButton = (Button) findViewById(R.id.quantity_button_minus);
+        mQuantityPlusButton = (Button) findViewById(R.id.quantity_button_plus);
+        mPhoneButton = (Button) findViewById(R.id.phone_button);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -132,6 +142,40 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mSupplierNameEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
+        mQuantityMinusButton.setOnTouchListener(mTouchListener);
+        mQuantityPlusButton.setOnTouchListener(mTouchListener);
+
+        mQuantityMinusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantityUpdate = Integer.parseInt(mQuantityEditText.getText().toString());
+                if (quantityUpdate > 0) {
+                    quantityUpdate -= 1;
+                    mQuantityEditText.setText(Integer.toString(quantityUpdate));
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.quantity_below_zero_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mQuantityPlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantityUpdate = Integer.parseInt(mQuantityEditText.getText().toString());
+                quantityUpdate += 1;
+                mQuantityEditText.setText(Integer.toString(quantityUpdate));
+            }
+            });
+
+        mPhoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+                phoneIntent.setData(Uri.parse("tel:" + mSupplierPhoneEditText.getText().toString()));
+                startActivity(phoneIntent);
+            }
+        });
+
     }
 
     // Get user input from editor and save new book into database.
@@ -149,11 +193,28 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentBookUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
                 TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) &&
-                TextUtils.isEmpty(supplierPhoneString))  {
+                TextUtils.isEmpty(supplierPhoneString)) {
             // Since no fields were modified, we can return early without creating a new book.
             // No need to create ContentValues and no need to do any ContentProvider operations.
+            Toast.makeText(this, "No new book added.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+//        Log.v("!!!!check empty", "name="+nameString + ", price=" + priceString + ", quantity=" +
+//                quantityString + ", suppliername=" + supplierNameString + ", phone=" +
+//                supplierPhoneString);
+//
+//        // Check if there are empty fields, and let user know to input all fields.
+//        if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(priceString) ||
+//                TextUtils.isEmpty(quantityString) || TextUtils.isEmpty(supplierNameString) ||
+//                TextUtils.isEmpty(supplierPhoneString)) {
+//            Log.v("!!!!!MADE IT TO MUST"," FILL OUT FIELDS");
+//
+//            Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
 //
 //        // If the price is not provided by the user, don't try to parse the string into an
 //        // integer value. Use 0 by default.
@@ -195,7 +256,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
 
             Log.v("!!!ROWSAFFECTED", "" + rowsAffected);
-            Log.v("!!!!!values = ", " " +values);
+            Log.v("!!!!!values = ", " " + values);
 
             // Show a toast message depending on whether or not the update was successful.
             if (rowsAffected == 0) {
@@ -225,11 +286,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Save book to database
-                saveBook();
-                // Exit activity
-                finish();
-                return true;
+                // Check to make sure there are no null values.
+                if (checkNoNull()) {
+                    // Save book to database
+                    saveBook();
+                    // Exit activity
+                    finish();
+                    return true;
+                } else {
+                    // Do not save.
+                    return true;
+                }
+
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -259,6 +327,33 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean checkNoNull() {
+
+        String nameString = mNameEditText.getText().toString().trim();
+        String priceString = mPriceEditText.getText().toString().trim();
+        String quantityString = mQuantityEditText.getText().toString().trim();
+        String supplierNameString = mSupplierNameEditText.getText().toString().trim();
+        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
+
+        Log.v("!!!!CHECKNONULL", "name="+nameString + ", price=" + priceString + ", quantity=" +
+                quantityString + ", suppliername=" + supplierNameString + ", phone=" +
+                supplierPhoneString);
+
+        // Check if there are empty fields, and let user know to input all fields.  Won't save.
+        if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(priceString) ||
+                TextUtils.isEmpty(quantityString) || TextUtils.isEmpty(supplierNameString) ||
+                TextUtils.isEmpty(supplierPhoneString)) {
+            Log.v("!!!!!MADE IT TO MUST"," FILL OUT FIELDS");
+
+            Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            // All fields are filled out, and continue on to save
+            return true;
+        }
+    }
+
 
     /**
      * This method is called when the back button is pressed.
@@ -295,7 +390,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 BookEntry.COLUMN_BOOK_PRICE,
                 BookEntry.COLUMN_BOOK_QUANTITY,
                 BookEntry.COLUMN_SUPPLIER_NAME,
-                BookEntry.COLUMN_SUPPLIER_PHONE };
+                BookEntry.COLUMN_SUPPLIER_PHONE};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -329,7 +424,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mQuantityEditText.setText(Integer.toString(quantity));
             mSupplierNameEditText.setText(supplierName);
             mSupplierPhoneEditText.setText(supplierPhone);
-          }
+        }
     }
 
     @Override

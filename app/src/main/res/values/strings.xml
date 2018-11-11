@@ -6,8 +6,8 @@
 
     <string name="unknown_price">Unknown Price</string>
 
-    <string name="empty_view_title_text">There is nothing to read.</string>
-    <string name="empty_view_subtitle_text">Get started by adding a book!</string>
+    <string name="empty_view_title_text">There is nothing to read. :(</string>
+    <string name="empty_view_subtitle_text">Add a book!</string>
 
     <string name="category_book_title">Title</string>
 
@@ -58,4 +58,7 @@
     <string name="sale_error">Error With Sale.</string>
     <string name="sale_complete">One Copy Sold!  Quantity Updated.</string>
     <string name="sale_no_copies">No Copies Left To Sell.</string>
+    <string name="button_plus_sign">+</string>
+    <string name="button_minus_sign">-</string>
+    <string name="quantity_below_zero_error">Can\'t have negative quantity!</string>
 </resources>

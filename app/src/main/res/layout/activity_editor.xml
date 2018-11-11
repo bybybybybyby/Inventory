@@ -44,14 +44,13 @@
             android:layout_weight="30"
             android:text="@string/category_book_price" />
 
-
         <EditText
             android:id="@+id/edit_book_price"
             style="@style/EditorFieldStyle"
             android:layout_width="0dp"
             android:layout_weight="70"
             android:hint="@string/hint_book_price"
-            android:inputType="textCapWords" />
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <!-- Book Quantity Available -->
@@ -67,25 +66,28 @@
             android:layout_weight="30"
             android:text="@string/category_book_quantity" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="15"
-            android:text="-" />
-
         <EditText
             android:id="@+id/edit_book_quantity"
             style="@style/EditorFieldStyle"
             android:layout_width="0dp"
             android:layout_weight="40"
             android:hint="@string/hint_book_quantity"
-            android:inputType="textCapWords" />
+            android:inputType="number" />
 
         <Button
+            android:id="@+id/quantity_button_minus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="15"
-            android:text="+" />
+            android:text="@string/button_minus_sign" />
+
+        <Button
+            android:id="@+id/quantity_button_plus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            android:text="@string/button_plus_sign" />
+
     </LinearLayout>
 
     <!-- Supplier Name -->
@@ -121,15 +123,26 @@
             style="@style/CategoryStyle"
             android:layout_width="0dp"
             android:layout_weight="30"
+            android:maxLines="1"
             android:text="@string/category_supplier_phone" />
 
         <EditText
             android:id="@+id/edit_supplier_phone"
             style="@style/EditorFieldStyle"
             android:layout_width="0dp"
-            android:layout_weight="70"
+            android:layout_weight="50"
             android:hint="@string/hint_supplier_phone"
-            android:inputType="textCapWords" />
+            android:inputType="phone" />
+
+        <!-- Button to open dialer to call phone number -->
+        <Button
+            android:id="@+id/phone_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:maxLines="1"
+            android:text="Call" />
+
     </LinearLayout>
 
 </LinearLayout>
