@@ -20,10 +20,13 @@ import android.widget.ListView;
 //import android.widget.TextView;
 
 import android.support.design.widget.FloatingActionButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.brian.inventory.data.BookContract.BookEntry;
 import com.example.brian.inventory.data.BookDbHelper;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -105,6 +108,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // into the books database table.
         // Receive the new content URI that will allow us to access BookTest's data in the future.
         Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+        if (newUri == null) {
+            Log.i(LOG_TAG, "Problem inserting data");
+        } else {
+                Log.i(LOG_TAG, "Inserting data successful");
+            }
     }
 
     @Override

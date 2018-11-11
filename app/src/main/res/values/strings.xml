@@ -11,9 +11,6 @@
 
     <string name="category_book_title">Title</string>
 
-    <string name="hint_pet_weight">Weight</string>
-    <string name="unit_pet_weight">DONT NEED</string>
-
     <string name="editor_activity_title_new_book">Add a Book</string>
     <string name="editor_activity_title_edit_book">Edit Book</string>
 
@@ -54,4 +51,11 @@
 
     <string name="category_supplier_phone">Supplier Phone</string>
     <string name="hint_supplier_phone">Supplier Phone</string>
+    <string name="sale_button">Sale</string>
+    <string name="Currency_type">$</string>
+    <string name="quantity_label">Quantity:</string>
+
+    <string name="sale_error">Error With Sale.</string>
+    <string name="sale_complete">One Copy Sold!  Quantity Updated.</string>
+    <string name="sale_no_copies">No Copies Left To Sell.</string>
 </resources>

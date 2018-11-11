@@ -195,6 +195,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
 
             Log.v("!!!ROWSAFFECTED", "" + rowsAffected);
+            Log.v("!!!!!values = ", " " +values);
 
             // Show a toast message depending on whether or not the update was successful.
             if (rowsAffected == 0) {
