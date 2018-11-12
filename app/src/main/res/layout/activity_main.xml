@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/fab_margin">
-    </android.support.design.widget.FloatingActionButton>
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/plus_96" />
 
 </RelativeLayout>

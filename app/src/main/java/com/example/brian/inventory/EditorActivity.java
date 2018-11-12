@@ -298,6 +298,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     return true;
                 }
 
+
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -329,7 +330,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     public boolean checkNoNull() {
-
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
@@ -349,10 +349,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            // All fields are filled out, and continue on to save
+             // All fields are filled out, and continue on to save
             return true;
         }
     }
+
+
 
 
     /**
