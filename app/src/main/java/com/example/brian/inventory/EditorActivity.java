@@ -61,7 +61,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private Button mQuantityPlusButton;
     private Button mPhoneButton;
 
-
     /**
      * Content URI for the existing book (null if it's a new book)
      */
@@ -175,7 +174,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 startActivity(phoneIntent);
             }
         });
-
     }
 
     // Get user input from editor and save new book into database.
@@ -199,29 +197,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             Toast.makeText(this, "No new book added.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-//        Log.v("!!!!check empty", "name="+nameString + ", price=" + priceString + ", quantity=" +
-//                quantityString + ", suppliername=" + supplierNameString + ", phone=" +
-//                supplierPhoneString);
-//
-//        // Check if there are empty fields, and let user know to input all fields.
-//        if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(priceString) ||
-//                TextUtils.isEmpty(quantityString) || TextUtils.isEmpty(supplierNameString) ||
-//                TextUtils.isEmpty(supplierPhoneString)) {
-//            Log.v("!!!!!MADE IT TO MUST"," FILL OUT FIELDS");
-//
-//            Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
-//
-//        // If the price is not provided by the user, don't try to parse the string into an
-//        // integer value. Use 0 by default.
-//        int price = 0;
-//        if (!TextUtils.isEmpty(priceString)) {
-//            price = Integer.parseInt(priceString);
-//        }
 
         // Create a ContentValues object where column names are the keys,
         // and book attributes from the editor are the values.
@@ -298,7 +273,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     return true;
                 }
 
-
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -344,8 +318,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(priceString) ||
                 TextUtils.isEmpty(quantityString) || TextUtils.isEmpty(supplierNameString) ||
                 TextUtils.isEmpty(supplierPhoneString)) {
-            Log.v("!!!!!MADE IT TO MUST"," FILL OUT FIELDS");
-
             Toast.makeText(this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -353,9 +325,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             return true;
         }
     }
-
-
-
 
     /**
      * This method is called when the back button is pressed.
@@ -380,7 +349,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Show dialog that there are unsaved changes
         showUnsavedChangesDialog(discardButtonClickListener);
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {

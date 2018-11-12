@@ -240,9 +240,6 @@ import com.example.brian.inventory.data.BookContract.BookEntry;
             }
         }
 
-        // TODO: Check for more validity
-
-
         // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
             return 0;

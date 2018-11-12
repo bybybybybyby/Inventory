@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //Set the URI on the data field of the intent
                 intent.setData(currentBookUri);
 
-                Log.v("!!!MAINACTIVITY", " INTENT= " + intent);
-
                 startActivity(intent);
             }
         });

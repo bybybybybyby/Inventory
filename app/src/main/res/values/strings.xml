@@ -51,6 +51,7 @@
 
     <string name="category_supplier_phone">Supplier Phone</string>
     <string name="hint_supplier_phone">Supplier Phone</string>
+
     <string name="sale_button">Sale</string>
     <string name="Currency_type">$</string>
     <string name="quantity_label">Quantity:</string>
@@ -58,7 +59,9 @@
     <string name="sale_error">Error With Sale.</string>
     <string name="sale_complete">One Copy Sold!  Quantity Updated.</string>
     <string name="sale_no_copies">No Copies Left To Sell.</string>
+
     <string name="button_plus_sign">+</string>
     <string name="button_minus_sign">-</string>
+
     <string name="quantity_below_zero_error">Can\'t have negative quantity!</string>
 </resources>
